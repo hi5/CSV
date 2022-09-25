@@ -13,7 +13,7 @@
 ; Author: Kdoske, trueski 
 ; http://www.autohotkey.com/forum/viewtopic.php?p=329126#329126
 ;##################################################    CSV    FUNCTIONS     ###############################################
-;if A Functions Field requires commas do not use spaces after each comma exp: 'text1,text2,text3,text,4'
+;if A Functions Field requires commas do not use spaces after each comma example: 'text1,text2,text3,text,4'
 ;Encapsulation must be quotations, example: 'text1, "text, 2", text3, text4'
 ;When you CSV_Load a blank file you must specify the column count before adding new rows or columns with a command similar to: %CSV_Identifier%CSV_TotalCols := 'column count'.
 ;CSV_Load(FileName, CSV_Identifier, Delimiter)                                      ;Load CSV file into memory, must complete first.
@@ -63,7 +63,7 @@ CSV_Load(FileName, CSV_Identifier="", Delimiter="`,")
   
   Loop, Parse, temp, `n, `r
   {
-    If (A_LoopField = "") ; added to skip emtpy lines
+    If (A_LoopField = "") ; added to skip empty lines
     	Continue            ; added
     Col := ReturnDSVArray(A_LoopField, CSV_Identifier . "CSV_Row" . A_Index . "_Col", Delimiter)
     Row := A_Index
@@ -576,15 +576,15 @@ Format4CSV(F4C_String)
    Return, F4C_String
 }
 ;#################################################################################################################### 
-; Delimiter Seperated Values by DerRaphael
+; Delimiter Separated Values by DerRaphael
 ; http://www.autohotkey.com/forum/post-203280.html#203280
 ;
-; Proof of Concept to extract DSV (Delimiter Seperator Values)
+; Proof of Concept to extract DSV (Delimiter Separator Values)
 ;      - adapted for AHK by derRaphael / 21st July 2008 -
 ;                           derRaphael@oleco.net
 ; Following rules apply:
 ;   You have to set a delimiter char and an encapsulation char.
-;   1) If you're using the delimeter char within your value, the value has
+;   1) If you're using the delimiter char within your value, the value has
 ;      to be surrounded by your encapsulation char. One at beginning and one
 ;      at its end.
 ;   2) If you're using your encapsulation char within your value you have to
@@ -621,7 +621,7 @@ ReturnDSVArray(CurrentDSVLine, ReturnArray="DSVfield", Delimiter=",", Encapsulat
    {
       Local RegExNeedle := "\" d "(?=(?:[^\" e "]*\" e "[^\" e "]*\" e ")*(?![^\" e "]*\" e "))"
       Local p1 := RegExMatch(CurrentDSVLine,RegExNeedle,tmp,p0)
-      ; p1 contains now the position of our current delimitor in a 1-based index
+      ; p1 contains now the position of our current delimiter in a 1-based index
       fieldCount++                         ; add count
       local field := SubStr(CurrentDSVLine,p0,p1-p0)
       ; This is the Line you'll have to change if you want different treatment
@@ -636,8 +636,8 @@ ReturnDSVArray(CurrentDSVLine, ReturnArray="DSVfield", Delimiter=",", Encapsulat
       Local _field := ReturnArray A_Index  ; construct a reference for our ReturnArray name
       %_field% := field                    ; dereference _field and assign our value to it
       if (p1=0)
-      {                          ; p1 is 0 when no more delimitor chars have been found
-         fieldCount--                     ; so correct fieldCount due to last appended delimitor
+      {                          ; p1 is 0 when no more delimiter chars have been found
+         fieldCount--                     ; so correct fieldCount due to last appended delimiter
          Break                            ; and exit loop
       } Else
          p0 := p1 + 1                     ; set the start of our RegEx Search to last result
