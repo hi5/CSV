@@ -105,7 +105,7 @@ Loop, %currentcsv_totalrows%
    Loop, %currentCSV_TotalCols%
    {
       Col := A_Index
-      EntireFile .= Format4CSV(%CSV_Identifier%CSV_Row%Row%_Col%Col%)
+      EntireFile .= Format4CSV(%CSV_Identifier%CSV_Row%Row%_Col%Col%,CSV_Delimiter(CSV_Identifier))
       If (Col <> %CSV_Identifier%CSV_TotalCols)
          EntireFile .= %CSV_Identifier%CSV_Delimiter
    }
@@ -542,7 +542,7 @@ CSV_LVSave(FileName, CSV_Identifier, Delimiter=",",OverWrite=1, Gui=1)
     Loop, %Cols%
     {
       LV_GetText(CellData, Row, A_Index)
-      FullRow .= Format4CSV(CellData)
+      FullRow .= Format4CSV(CellData,CSV_Delimiter(CSV_Identifier))
       If A_Index <> %Cols%
         FullRow .= Delimiter
     }
@@ -558,14 +558,15 @@ CSV_LVSave(FileName, CSV_Identifier, Delimiter=",",OverWrite=1, Gui=1)
 ;#################################################################################################################### 
 ; Format4CSV by Rhys
 ; http://www.autohotkey.com/forum/topic27233.html
-Format4CSV(F4C_String)
+; adding Delimiter as reported here https://www.autohotkey.com/boards/viewtopic.php?p=482369#p482369
+Format4CSV(F4C_String,Delimiter="`,")
 {
    Reformat:=False ;Assume String is OK
    IfInString, F4C_String,`n ;Check for linefeeds
       Reformat:=True ;String must be bracketed by double quotes
    IfInString, F4C_String,`r ;Check for linefeeds
       Reformat:=True
-   IfInString, F4C_String,`, ;Check for commas
+   IfInString, F4C_String,%Delimiter% ;was check for commas, updated to Delimiter 2022-09-25 - called from CSV_Save() and CSV_LVSave()
       Reformat:=True
    IfInString, F4C_String, `" ;Check for double quotes
    {   Reformat:=True
