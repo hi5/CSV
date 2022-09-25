@@ -65,6 +65,9 @@ CSV_Save("ExampleCSVFile.csv","data")
 ; Sample script on how to add a column to be able to write new data to a CSV
 ; https://www.autohotkey.com/boards/viewtopic.php?p=242250#p242250
 
+; CSVSwapColumns() - https://www.autohotkey.com/boards/viewtopic.php?p=484029#p484029
+; CSVMoveColumns() - https://www.autohotkey.com/boards/viewtopic.php?p=484035#p484035
+
 ; When using this CSV library the script will remain persistent (remain active in memory)
 ; so you need close the script when you are done to free the memory
 ExitApp
